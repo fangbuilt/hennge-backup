@@ -10,6 +10,13 @@ function CreateUserForm({ }: CreateUserFormProps) {
     password: ''
   });
 
+  function handleInputChange(field: keyof typeof payload, value: string) {
+    setPayload((previousPayload) => ({
+      ...previousPayload,
+      [field]: value
+    }))
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -39,10 +46,10 @@ function CreateUserForm({ }: CreateUserFormProps) {
         {/* make sure the username and password are submitted */}
         {/* make sure the inputs have the accessible names of their labels */}
         <label style={formLabel} htmlFor='username'>Username</label>
-        <input style={formInput} id='username' type='text' value={payload.username} onChange={(e) => setPayload({username: e.target.value, password: payload.password})} />
+        <input style={formInput} id='username' type='text' value={payload.username} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {handleInputChange('username', e.target.value)}} />
 
         <label style={formLabel} htmlFor='password'>Password</label>
-        <input style={formInput} id='password' type='password' value={payload.password} onChange={(e) => setPayload({username: payload.username, password: e.target.value})} />
+        <input style={formInput} id='password' type='password' value={payload.password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {handleInputChange('password', e.target.value)}} />
 
         <button style={formButton}>Create User</button>
       </form>
